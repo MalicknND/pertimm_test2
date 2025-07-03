@@ -4,20 +4,22 @@ const axios = require("axios");
  * Découvre les cases autour du joueur
  * @param {string} urlDiscover - URL retournée par start-game ou move
  */
-
 async function discover(urlDiscover) {
   try {
-    const response = await axios.get(urlDiscover);
-    console.log("Cases autour du joueur :", response.data);
-    response.data.forEach((cell) => {
-      console.log(`${cell.x},${cell.y} - ${cell.move} - ${cell.value}`);
+    const res = await axios.get(urlDiscover);
+    console.log("🔍 Cases autour de toi :");
+    res.data.forEach((cell) => {
+      console.log(
+        `📍 (${cell.x}, ${cell.y}) - ${cell.value} - move: ${cell.move}`
+      );
     });
-  } catch (error) {
+    return res.data;
+  } catch (err) {
     console.error(
-      "Erreur lors de la découverte des cases :",
-      error.response?.data || error.message
+      "❌ Erreur pendant la découverte :",
+      err.response?.data || err.message
     );
   }
 }
 
-module.exports = { discover };
+module.exports = discover;
